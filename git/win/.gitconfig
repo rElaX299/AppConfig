@@ -1,0 +1,12 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = rElaX299
+	email = 2399984023@qq.com
+[http]
+	sslbackend = schannel
+[commit]
+	template = ~/.gitmessage

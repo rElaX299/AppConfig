@@ -22,3 +22,8 @@ The default config path is ~/.wslconfig
 
 Ranger is a wonderful cli file explorer. I used it in macos and wsl.
 The default config path is ~/.config/ranger
+
+### git
+
+Git config and git commit message.
+The default config path is ~/.gitconfig
