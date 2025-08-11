@@ -1,1 +1,21 @@
 # AppConfig
+
+## Brief
+
+This repo contains all my app config.
+Each app configs are not same in different platform such as windows or macos.
+(If this app is available in multiple platform.)
+
+## Apps
+
+### wezterm
+
+Wezterm is a modern terminal, which I used in windows and macos.
+
+### wsl
+
+Wsl is known as windows sub linux. I used wsl in windows.
+
+### ranger
+
+Ranger is a wonderful cli file explorer. I used it in macos and wsl.
