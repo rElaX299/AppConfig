@@ -4,13 +4,13 @@ local config = wezterm.config_builder()
 
 config.launch_menu = {
   {
-    label = 'PoserShell',
-    args = { 'powershell.exe', '-NoLogo' },
+    label = 'fish',
+    args = { 'fish' }
   },
   {
-    label = "Cmd",
-    args = { 'cmd.exe'}
-  }
+    label = "bash",
+    args = { 'bash'}
+  },
 }
 
 -------------------- 行为配置 --------------------
@@ -44,11 +44,26 @@ config.initial_rows = 30
 --   COMSPEC = 'C:\\Users\\lusic\\AppData\\Local\\Programs\\nu\\bin\\nu.exe',
 -- }
 
-config.default_prog = { 'C:\\Users\\lusic\\AppData\\Local\\Programs\\nu\\bin\\nu.exe' }
+config.default_domain = 'WSL:Ubuntu-22.04'
+config.default_prog = { 'fish' }
 
 
 -------------------- 键盘绑定 --------------------
 local act = wezterm.action
+
+wezterm.on('rename-tab', function(window, pane)
+  window:perform_action(
+    act.PromptInputLine {
+      description = 'Enter new tab name',
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+    pane
+  )
+end)
 
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
@@ -74,24 +89,21 @@ config.keys = {
     mods = 'CTRL|SHIFT',
     action = act.SpawnCommandInNewTab {
       domain = 'DefaultDomain',
-      args = {'wsl', '-d', 'Ubuntu-22.04', "--cd", "~"},
+      args = {'fish'},
     }
   },
   {
     key = '@',
     mods = 'CTRL|SHIFT',
     action = act.SpawnCommandInNewTab {
-      args = {'cmd'},
+      args = {'bash'},
     }
   },
   {
-    key = '#',
-    mods = 'CTRL|SHIFT',
-    action = act.SpawnCommandInNewTab {
-      domain = 'DefaultDomain',
-      args = {'pwsh'},
-    }
-  }
+	key='E', 
+	mods='CTRL|SHIFT', 
+	action = wezterm.action {EmitEvent='rename-tab'}
+  },
 }
 
 for i = 1, 8 do
@@ -150,7 +162,7 @@ config.mouse_bindings = {
 -------------------- 窗口居中 --------------------
 wezterm.on("gui-startup", function(cmd)
         local screen = wezterm.gui.screens().active
-        local width, height = screen.width * 0.75, screen.height * 0.75
+        local width, height = screen.width * 0.5, screen.height * 0.5
         local tab, pane, window = wezterm.mux.spawn_window(cmd or {
                 position = {
             x = (screen.width - width) / 2,
