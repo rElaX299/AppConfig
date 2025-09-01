@@ -30,3 +30,4 @@ $env.config.color_config = {
     shape_directory: purple_underline
     shape_filepath: purple_underline
 }
+$env.config.buffer_editor = "vim"
